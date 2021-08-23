@@ -1,0 +1,40 @@
+[DEFAULT]
+# bantime is a parameter to set the length of a ban
+# which the value is determined in seconds. Default
+# is set at 600 seconds or 10 minutes
+bantime = 3600
+
+# ignoreip is a parameter to identifies IP address that 
+# should be ignored by the banning system. By default
+# this is just set to ignore traffic coming from the
+# machine itself. We gonna append that to ignore traffic
+# from local machine.
+ignoreip = 127.0.0.1/8
+ignoreip = 192.168.100.20
+
+# findtime is a parameter that sets the window that
+# fail2ban will pay attention to when looking for
+# repeated failed authentication attempts. Default
+# is set at 600 seconds. This will prevent any 
+# bruteforce attempts at the machine we're protecting
+# Combined by maxretry to set the number of failed
+# attempts that allowed within the window of findtime
+findtime = 600
+maxretry = 3
+
+# banaction is a parameter to set the action will be 
+# used when the threshold is reached. There is 
+# actually a file located in /etc/fail2ban/action.d 
+# called iptables-multiport.conf. This handles the
+# actual iptables manipulation to ban an IP address
+# Meanwhile protocol specify the type of traffic that 
+# will be dropped when an IP ban is implemented
+# This is also the type of traffic that is sent to 
+# the new iptables chain.
+banaction = iptables-multiport
+protocol = tcp
+
+[sshd]
+
+enabled = true
+logpath = /var/log/auth.log

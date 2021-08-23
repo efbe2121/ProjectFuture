@@ -1,0 +1,56 @@
+- name: Preparation and building
+  hosts: webservers
+  become_user: client
+  gather_facts: no
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
+  tasks:
+    - name: Create WordPress Dir
+      file:
+        path: /home/client/WordPress
+        state: directory
+
+    - name: Copy Docker File
+      copy: 
+        src: /media/master/Data/[Project] Blibli/Dockerfile
+        dest: /home/client/Dockerfile
+        owner: client
+        group: docker
+        mode: '0740'
+
+    - name: Reset SSH Connection to refresh permission for docker
+      ansible.builtin.meta:
+        reset_connection
+
+    - name: Install Docker - Service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+      become: yes
+      become_method: sudo
+      become_user: root
+
+    - name: Mounting - Service
+      service:
+        name: nfs-utils
+        state: started
+        enabled: yes
+      become: yes
+      become_method: sudo
+      become_user: root
+
+    - name: Install docker-requirements
+      pip:
+        name: 
+          - docker
+          - six
+        extra_args: --user
+        state: latest
+
+    - name: Docker Build image
+      docker_image:
+        name: wordpress1
+        path: /home/client/.
+        state: present

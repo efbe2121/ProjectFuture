@@ -1,0 +1,31 @@
+- name: Updating Fail2Ban Config
+  hosts: allserver
+  become: yes
+  become_user: root
+  become_method: sudo
+  vars:
+    ansible_python_interpreter: /usr/bin/python
+
+  tasks:
+    - name: Making sure Fail2Ban can be installed
+      package: 
+        name: epel-release
+        state: present
+
+    - name: Making sure Fail2Ban installed
+      package:
+        name: fail2ban
+        state: present
+
+    - name: Copying Config - Overwrite old
+      copy:
+        src: /media/master/Data/[Project] Blibli/PlaybookUsed/Fail2Ban/jail.local
+        dest: /etc/fail2ban/jail.local
+        owner: root
+        group: root
+
+    - name: Reload Fail2Ban
+      service:
+        state: reloaded
+        name: fail2ban
+        enabled: yes
