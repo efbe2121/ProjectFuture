@@ -1,0 +1,13 @@
+alias python='python3'
+
+alias makeiso='sudo mkisofs -o ../CentOSKS_Client.iso -b isolinux.bin -c boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -V "CentOS 7 x86_64" -R -J -v -T isolinux/. .'
+alias hdd='cd /media/master/Data'
+alias projek='cd /media/master/Data/\[Project\]\ Blibli'
+
+alias vbox1='ssh client@192.168.100.46'
+alias vbox2='ssh client@192.168.100.53'
+alias vbox3='ssh client@192.168.100.52'
+
+alias startVbox1='vboxmanage startvm "CENTOS Dbase" --type headless'
+alias startVbox2='vboxmanage startvm "Centos Server1" --type headless'
+alias startVbox3='vboxmanage startvm "Centos Server2" --type headless'

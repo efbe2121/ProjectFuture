@@ -13,7 +13,7 @@
 
     - name: Copy Docker File
       copy: 
-        src: /media/master/Data/[Project] Blibli/Dockerfile
+        src: /media/master/Data/[Project] Blibli/PlaybookUsed/WordPress/Dockerfile
         dest: /home/client/Dockerfile
         owner: client
         group: docker
