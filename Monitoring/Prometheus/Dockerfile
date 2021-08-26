@@ -1,10 +1,8 @@
 FROM alpine:latest
 
-RUN apk add prometheus
+RUN apk add --no-cache prometheus
 
-ENTRYPOINT /usr/local/bin/prometheus \ 
-            --config.file /etc/prometheus/prometheus.yml \ 
-            --storage.tsdb.path /var/lib/prometheus/ \
-            --web.console.libraries=/usr/share/prometheus/console_libraries \
-            --web.console.templates=/usr/share/prometheus/consoles
+ENTRYPOINT ["prometheus"]
+CMD ["--config.file=/etc/prometheus/prometheus.yml"]
+
 EXPOSE 9090

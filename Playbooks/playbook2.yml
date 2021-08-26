@@ -20,8 +20,7 @@
         mode: '0740'
 
     - name: Reset SSH Connection to refresh permission for docker
-      ansible.builtin.meta:
-        reset_connection
+      meta: reset_connection
 
     - name: Install Docker - Service
       service:
@@ -51,6 +50,6 @@
 
     - name: Docker Build image
       docker_image:
-        name: wordpress1
+        name: wordpress
         path: /home/client/.
         state: present

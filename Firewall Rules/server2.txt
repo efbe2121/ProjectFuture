@@ -1,0 +1,15 @@
+[client@server2 ~]$ sudo firewall-cmd --list-all
+public (active)
+  target: default
+  icmp-block-inversion: no
+  interfaces: enp0s3
+  sources: 192.168.100.20
+  services: dhcpv6-client ssh
+  ports: 
+  protocols: 
+  masquerade: no
+  forward-ports: 
+  source-ports: 
+  icmp-blocks: 
+  rich rules: 
+	

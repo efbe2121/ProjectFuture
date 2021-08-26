@@ -1,0 +1,18 @@
+[client@database ~]$ sudo firewall-cmd --list-all
+public (active)
+  target: default
+  icmp-block-inversion: no
+  interfaces: enp0s3
+  sources: 
+  services: dhcpv6-client ssh
+  ports: 
+  protocols: 
+  masquerade: no
+  forward-ports: 
+  source-ports: 
+  icmp-blocks: 
+  rich rules: 
+	rule family="ipv4" source address="192.168.100.47" port port="3306" protocol="tcp" accept
+	rule family="ipv4" source address="192.168.100.48" port port="3306" protocol="tcp" accept
+	rule family="ipv4" source address="192.168.100.20" port port="9100" protocol="tcp" accept
+[client@database ~]$ 

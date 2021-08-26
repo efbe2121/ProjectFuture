@@ -19,9 +19,9 @@
    - name: Make 1st Container
      docker_container:
        name: WordPress1
-       image: wordpress1
+       image: wordpress
        recreate: yes
-       volumes: /home/client/WordPress/:/var/www/html
+       volumes: /home/client/WordPress:/var/www/localhost/htdocs
        published_ports: 81:80
        state: started
        detach: yes
@@ -29,9 +29,9 @@
    - name: Make 2nd Container
      docker_container:
        name: WordPress2
-       image: wordpress1
+       image: wordpress
        recreate: yes
-       volumes: /home/client/WordPress/:/var/www/html
+       volumes: /home/client/WordPress/:/var/www/localhost/htdocs
        published_ports: 82:80
        state: started
        detach: yes
@@ -39,9 +39,9 @@
    - name: Make 3rd Container
      docker_container:
        name: WordPress3
-       image: wordpress1
+       image: wordpress
        recreate: yes
-       volumes: /home/client/WordPress/:/var/www/html
+       volumes: /home/client/WordPress/:/var/www/localhost/htdocs
        published_ports: 83:80
        state: started
        detach: yes
