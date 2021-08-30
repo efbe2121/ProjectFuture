@@ -21,4 +21,4 @@ Monitoring each Services
 
 Security
 - Firewalld
-- File2Ban (otw)
+- File2Ban
