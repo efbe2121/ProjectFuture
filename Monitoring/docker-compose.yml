@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  
+  haproxy:
+    image: "efbe12/haproxy-alpine:latest"
+    ports:
+      - 100:80
+    volumes:
+      - $PWD/Haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+  
+  prometheus:
+    image: "efbe12/prometheus-alpine:latest"
+    ports:
+      - 9090:9090
+    volumes:
+      - $PWD/Prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+  
+  grafana:
+    image: "grafana/grafana:8.1.2"
+    ports:
+      - 3000:3000
+    volumes:
+      - $PWD/Grafana/grafana_db:/var/lib/grafana

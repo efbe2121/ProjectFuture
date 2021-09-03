@@ -9,10 +9,8 @@ OPTION=$(whiptail --title "$TITLE" --menu "$ISI" 25 78 9 \
 "3" "Run the docker" \
 "4" "Update Fail2Ban Configs" \
 "5" "Change the hosts inventory" \
-"6" "Run the haproxy" \
-"7" "Run the prometheus" \
-"8" "Initialize/Update Node_Exporter (Run this if error occurs in prometheus)" \
-"9" "Run the Grafana" 3>&1 1>&2 2>&3)
+"6" "Initialize/Update Node_Exporter (Run this if error occurs in prometheus)" \
+"7" "Run the load balancer & monitoring apps" 3>&1 1>&2 2>&3)
 
 if [ "$OPTION" == 1 ]; then
 
@@ -39,15 +37,10 @@ elif [ "$OPTION" == 5 ]; then
 
 elif [ "$OPTION" == 6 ]; then
 
-	/bin/bash Monitoring/Haproxy/runHaproxy.sh
+	ansible-playbook -i hosts.ini ./Monitoring/Node\ Exporter/nodeexporter.yml --ask-pass
 
 elif [ "$OPTION" == 7 ]; then
 
-	/bin/bash Monitoring/Prometheus/runPrometheus.sh
-
-elif [ "$OPTION" == 8 ]; then
-
-	ansible-playbook -i hosts.ini ./Monitoring/Node\ Exporter/nodeexporter.yml --ask-pass
-
+	cd ./Monitoring && docker-compose up -d
 
 fi
