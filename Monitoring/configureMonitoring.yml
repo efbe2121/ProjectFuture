@@ -1,0 +1,7 @@
+# This is tasks for Node Exporter
+- name: Monitoring Configuration - NodeExporter
+  import_playbook: "NodeExporter/nodeexporter.yml" 
+
+# This is tasks for Haproxy
+- name: Monitoring Configuration - Haproxy
+  import_playbook: "Haproxy/haproxy.yml"

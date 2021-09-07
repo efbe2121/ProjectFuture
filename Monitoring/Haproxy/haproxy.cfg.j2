@@ -1,13 +1,13 @@
 global
 	log /dev/log local2
 	stats socket /var/lib/haproxy/stats
-	maxconn 50000
+	maxconn {{ maxconn }}
 	user haproxy
 	group haproxy
 
 	# Default SSL material locations
-	ca-base /etc/ssl/certs
-	crt-base /etc/ssl/private
+	ca-base {{ cabase }}
+	crt-base {{ crtbase }}
 
 	# See: https://ssl-config.mozilla.org/#server=haproxy&server-version=2.0.3&config=intermediate
     ssl-default-bind-ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384
@@ -24,7 +24,7 @@ defaults
 	stats enable
 	stats uri /stats
 	stats realm Haproxy\ Statistics
-	stats auth client:TeH3Dm4AkhCPu4JP
+	stats auth {{ uname }}:{{ password }}
 
 frontend main
 	bind :80

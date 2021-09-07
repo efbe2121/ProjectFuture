@@ -1,17 +1,16 @@
-- name: Preparation and building
+- name: Automation_python3 interface
   hosts: webservers
-  become_user: client
   gather_facts: no
   vars:
     ansible_python_interpreter: /usr/bin/python3
 
   tasks:
-    - name: Create WordPress Dir
+    - name: Create WordPress directory
       file:
         path: /home/client/WordPress
         state: directory
 
-    - name: Copy Docker File
+    - name: Copy Dockerfile
       copy: 
         src: /media/master/Data/[Project] Blibli/PlaybookUsed/WordPress/Dockerfile
         dest: /home/client/Dockerfile
@@ -19,36 +18,33 @@
         group: docker
         mode: '0740'
 
-    - name: Reset SSH Connection to refresh permission for docker
+    - name: Reset SSH
       meta: reset_connection
 
-    - name: Install Docker - Service
+    - name: Enable docker service
       service:
         name: docker
         state: started
         enabled: yes
       become: yes
-      become_method: sudo
-      become_user: root
 
-    - name: Mounting - Service
+    - name: Enable mounting service
       service:
         name: nfs-utils
         state: started
         enabled: yes
       become: yes
-      become_method: sudo
-      become_user: root
 
-    - name: Install docker-requirements
+    - name: Install dependencies for docker module
       pip:
         name: 
           - docker
+          # Things listed below docker may differ
           - six
         extra_args: --user
         state: latest
 
-    - name: Docker Build image
+    - name: Building image from Dockerfile
       docker_image:
         name: wordpress
         path: /home/client/.

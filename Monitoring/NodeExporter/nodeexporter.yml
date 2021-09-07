@@ -1,35 +1,34 @@
 - name: Setting up nodeExporter
   hosts: allserver
-  become: yes
   gather_facts: false
 
   tasks:
-    - name: Make the directory
+    - name: Ensure directory exists
       file:
         path: /home/client/Node
         state: directory
 
-    - name: Copying Node Exporter file
+    - name: Moving the application
       copy:
-        src: /media/master/Data/[Project] Blibli/PlaybookUsed/Monitoring/Node Exporter/node_exporter
+        src: /media/master/Data/[Project] Blibli/PlaybookUsed/Monitoring/NodeExporter/node_exporter
         dest: /home/client/Node/node_exporter
         owner: client
         group: client
         mode: '0755'
 
-    - name: Copying configuration
+    - name: Copying service file
       copy:
-        src: /media/master/Data/[Project] Blibli/PlaybookUsed/Monitoring/Node Exporter/node_exporter.service
+        src: /media/master/Data/[Project] Blibli/PlaybookUsed/Monitoring/NodeExporter/node_exporter.service
         dest: /etc/systemd/system/node_exporter.service
         owner: root
         group: root
         mode: '0755'
-      become_method: sudo
-      become_user: root
+      become: yes
 
-    - name: Reloading systemd system
+    - name: Reloading node exporter service and enable it
       systemd:
         state: started
         daemon_reload: yes
         name: node_exporter.service
         enabled: yes
+      become: yes

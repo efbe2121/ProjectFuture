@@ -1,8 +1,6 @@
-- name: Install everything for initialization
+- name: Automation_python2 interface
   hosts: webservers
   become: yes
-  become_method: sudo
-  become_user: root
   gather_facts: no
 
   tasks:
@@ -12,23 +10,14 @@
         rich_rule: 'rule family="ipv4" source address="192.168.100.20" accept'
         permanent: true
         state: enabled
+      notify: "reloadfirewall"
 
-    - name: Reload Firewall
-      service:
-        state: reloaded
-        name: firewalld
-
-    - name: Cleanup installation
+    - name: Update distribution
       yum:
         name: '*'
         state: latest
-      
-    - name: Cleanup part 2
-      command: /bin/yum clean all
-      args:
-        warn: false
 
-    - name: Install things we may need
+    - name: Fetching apps...
       yum:
         name:
           - python3 
@@ -37,26 +26,13 @@
           - epel-release
         state: present #Present used to ensure that desired package is installed
 
-    - name: Install latest apps
+    - name: Fetching utilities apps...
       yum:
         name:
           - python3-pip
           - nfs-utils
           - yum-utils
         state: latest #Latest used to ensure that package installed is the latest version
-
-    - name: Install Docker - Repository
-      get_url:
-        url: https://download.docker.com/linux/centos/docker-ce.repo
-        dest: /etc/yum.repos.d/docker-ce.repo
-
-    - name: Install Docker - Installation
-      yum:
-        name:
-          - docker-ce
-          - docker-ce-cli
-          - containerd.io
-        state: latest
 
     - name: Create Docker Group
       group:
@@ -68,3 +44,23 @@
         name: client
         group: docker
         append: yes
+
+    - name: Adding repository for docker 
+      get_url:
+        url: https://download.docker.com/linux/centos/docker-ce.repo
+        dest: /etc/yum.repos.d/docker-ce.repo
+
+    - name: Installing docker...
+      yum:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+        state: latest
+
+  handlers:
+    - name: Reload Firewall
+      service:
+        state: reloaded
+        name: firewalld
+      listen: "reloadfirewall"

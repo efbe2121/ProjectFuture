@@ -3,8 +3,8 @@ public (active)
   target: default
   icmp-block-inversion: no
   interfaces: enp0s3
-  sources: 192.168.100.20
-  services: dhcpv6-client ssh
+  sources: 
+  services: dhcpv6-client http ssh
   ports: 
   protocols: 
   masquerade: no
@@ -12,4 +12,4 @@ public (active)
   source-ports: 
   icmp-blocks: 
   rich rules: 
-
+	rule family="ipv4" source address="192.168.100.20" accept
