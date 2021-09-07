@@ -1,3 +1,5 @@
+Directory Structures: 
+```bash
 .  
 ├── Fail2Ban  
 │   ├── jail.local  
@@ -36,9 +38,9 @@
 │   └── secrets.yml  
 ├── README.md  
 ├── run.sh  
-└── WordPress  
+└── WordPress
     └── Dockerfile  
-
+```
 ################################################  
 run.sh is the automated script to run everything  
 with simple arrow keys and enter to choose  
