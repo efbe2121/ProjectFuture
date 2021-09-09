@@ -1,0 +1,11 @@
+- name: Allow connection from local
+  firewalld:
+    zone: public
+    source: "{{ item.source }}"
+    permanent: true
+    state: enabled
+  loop: "{{ firewall_rules }}"
+  notify: reloadfirewall
+
+- name: Force all notified handlers to run at this point, not waiting for normal sync points
+  meta: flush_handlers

@@ -1,0 +1,28 @@
+- name: Ensure Grafana group exist
+  become: yes
+  group:
+    name: "{{ grafana_user }}"
+    state: present
+    system: true
+
+- name: Ensure user exist in grafana group
+  become: yes
+  user:
+    comment: Grafana service account
+    name: "{{ grafana_user }}"
+    group: "{{ grafana_user }}"
+    shell: "/sbin/nologin"
+    system: true
+    create_home: false
+
+- name: Get package and install
+  yum:
+    name: "{{ download_url }}/grafana-enterprise-{{ grafana_version }}-1.x86_64.rpm"
+    state: present
+  become: yes
+  notify:
+    - ReloadingDaemon
+    - EnablingGrafana
+
+- name: Force all notified handlers to run at this point, not waiting for normal sync points
+  meta: flush_handlers

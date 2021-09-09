@@ -1,0 +1,18 @@
+# Here lies the handlers
+- name: ReloadingDaemon
+  become: yes
+  systemd:
+    daemon_reload: yes
+
+- name: EnablingPrometheus
+  become: yes
+  systemd:
+    state: started
+    name: prometheus
+    enabled: yes
+
+- name: RestartingPrometheus
+  become: yes
+  systemd:
+    state: restarted
+    name: prometheus

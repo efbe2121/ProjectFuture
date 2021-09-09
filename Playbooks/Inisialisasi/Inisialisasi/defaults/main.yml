@@ -1,0 +1,15 @@
+ansible_python_interpreter: /usr/bin/python
+
+packages:
+  - { name: "*", state: latest }   # Updating distro
+  - { name: "python3", state: present }
+  - { name: "net-tools", state: present }
+  - { name: "libselinux-python3", state: present }
+  - { name: "epel-release", state: present }
+  - { name: "python3-pip", state: latest }
+  - { name: "nfs-utils", state: latest }
+  - { name: "yum-utils", state: latest }
+
+firewall_rules:
+  - source: "192.168.100.20"
+  - source: "192.168.100.54"

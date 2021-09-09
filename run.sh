@@ -3,18 +3,17 @@
 TITLE="Automation v2"
 ISI="Ini adalah menu box untuk automasi terhadap beberapa hal sesuai dengan pilihan yang tersedia"
 
-OPTION=$(whiptail --title "$TITLE" --menu "$ISI" 25 78 11 \
+OPTION=$(whiptail --title "$TITLE" --menu "$ISI" 25 78 10 \
 "1" "Add New Client (user@IP) to automate" \
-"2" "Run the initialization" \
-"3" "Run the docker" \
-"4" "Update Fail2Ban Configs" \
-"5" "Change the hosts inventory" \
-"6" "Update HaProxy Configs & Initiate Node_exporter" \
-"7" "Run the load balancer & monitoring apps" \
-"8" "Restart prometheus" \
-"9" "Restart grafana" \
-"10" "Restart haproxy" \
-"11" "Update database" 3>&1 1>&2 2>&3)
+"2" "Initialization" \
+"3" "Docker" \
+"4" "Haproxy" \
+"5" "Prometheus" \
+"6" "Grafana" \
+"7" "Node Exporter" \
+"8" "Update database" \
+"9" "Fail2Ban" \
+"10" "Change hosts inventory" 3>&1 1>&2 2>&3)
 
 if [ "$OPTION" == 1 ]; then
 
@@ -25,42 +24,38 @@ if [ "$OPTION" == 1 ]; then
 
 elif [ "$OPTION" == 2 ]; then
 
-	ansible-playbook -i hosts.ini -e @Playbooks/secrets.yml --vault-password-file /etc/ansible/.pwd Playbooks/playbook1.yml Playbooks/playbook2.yml
+	ansible-playbook -i hosts.ini -e @Playbooks/secrets.yml --vault-password-file /etc/ansible/.pwd Playbooks/Inisialisasi/playbook.yml
 
 elif [ "$OPTION" == 3 ]; then
 
-	ansible-playbook -i hosts.ini -e @Playbooks/secrets.yml --vault-password-file /etc/ansible/.pwd Playbooks/runDocker.yml
+	ansible-playbook -i hosts.ini -e @Playbooks/secrets.yml --vault-password-file /etc/ansible/.pwd Playbooks/Docker/playbook.yml
 
 elif [ "$OPTION" == 4 ]; then
 
-	ansible-playbook -i hosts.ini -e @Playbooks/secrets.yml --vault-password-file /etc/ansible/.pwd Fail2Ban/updateFail2ban.yml
+	ansible-playbook -i hosts.ini -e @Playbooks/secrets.yml --vault-password-file /etc/ansible/.pwd Playbooks/Haproxy/playbook.yaml
 
 elif [ "$OPTION" == 5 ]; then
 
-	nano hosts.ini
+	ansible-playbook -i hosts.ini -e @Playbooks/secrets.yml --vault-password-file /etc/ansible/.pwd Playbooks/Prometheus/playbook.yml
 
 elif [ "$OPTION" == 6 ]; then
 
-	ansible-playbook -i hosts.ini -e @Playbooks/secrets.yml --vault-password-file /etc/ansible/.pwd Monitoring/configureMonitoring.yml
+	ansible-playbook -i hosts.ini -e @Playbooks/secrets.yml --vault-password-file /etc/ansible/.pwd Playbooks/Grafana/playbook.yaml
 
 elif [ "$OPTION" == 7 ]; then
 
-	cd ./Monitoring && docker-compose up -d
+	ansible-playbook -i hosts.ini -e @Playbooks/secrets.yml --vault-password-file /etc/ansible/.pwd Playbooks/NodeExporter/playbook.yaml
 
 elif [ "$OPTION" == 8 ]; then
 
-	cd ./Monitoring && docker-compose restart prometheus
+	ansible-playbook -i hosts.ini -e @Playbooks/secrets.yml --vault-password-file /etc/ansible/.pwd Playbooks/MariaDB/mariaDB.yml
 
 elif [ "$OPTION" == 9 ]; then
 
-    cd ./Monitoring && docker-compose restart grafana
+    ansible-playbook -i hosts.ini -e @Playbooks/secrets.yml --vault-password-file /etc/ansible/.pwd Fail2Ban/updateFail2ban.yml
 
 elif [ "$OPTION" == 10 ]; then
 
-    cd ./Monitoring && docker-compose restart haproxy
-
-elif [ "$OPTION" == 11 ]; then
-
-	ansible-playbook -i hosts.ini -e @Playbooks/secrets.yml --vault-password-file /etc/ansible/.pwd Playbooks/mariaDB.yml
+    nano ./hosts.ini
 
 fi

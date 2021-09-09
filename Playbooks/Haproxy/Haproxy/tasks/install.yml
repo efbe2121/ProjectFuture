@@ -1,0 +1,10 @@
+- name: Install haproxy
+  become: yes
+  yum:
+    name: haproxy
+    state: latest
+  vars:
+    ansible_python_interpreter: /usr/bin/python
+  notify:
+    - ReloadDaemon
+    - EnableHaproxy

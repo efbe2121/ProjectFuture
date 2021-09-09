@@ -1,0 +1,6 @@
+- name: Prometheus & Alert Manager installation
+  hosts: monitoring
+  gather_facts: no
+
+  roles:
+    - role: Prometheus

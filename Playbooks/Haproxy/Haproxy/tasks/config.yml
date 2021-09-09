@@ -1,0 +1,9 @@
+- name: Applying Haproxy Configs
+  become: yes
+  template:
+    src: "templates/haproxy.cfg.j2"
+    dest: "/etc/haproxy/haproxy.cfg"
+  changed_when: True
+  notify:
+    - ReloadDaemon
+    - RestartHaproxy

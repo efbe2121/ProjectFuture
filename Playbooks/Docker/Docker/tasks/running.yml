@@ -1,0 +1,10 @@
+- name: Making Containers
+  docker_container:
+    name: "{{ item.name }}"
+    image: efbe12/wordpress-alpine
+    recreate: yes
+    volumes: /home/client/WordPress:/var/www/localhost/htdocs
+    published_ports: "{{ item.port }}"
+    state: started
+    detach: yes
+  loop: "{{ docker_configs }}"

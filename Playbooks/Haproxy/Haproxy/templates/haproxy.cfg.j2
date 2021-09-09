@@ -1,0 +1,33 @@
+global
+	log 		127.0.0.1 local2
+	chroot 		/var/lib/haproxy
+	stats 		socket /var/lib/haproxy/stats
+	stats 		timeout 30s
+	maxconn 	{{ maxkoneksi }}
+	user 		haproxy
+	group 		haproxy
+	daemon
+
+defaults
+	log		global
+	mode	http
+	option	httplog
+	
+	timeout connect 5000
+    timeout client  50000
+    timeout server  50000
+
+    stats 		enable
+	stats 		uri /stats
+	stats 		realm Haproxy\ Statistics
+	stats 		auth {{ uname }}:{{ password }}
+
+frontend main
+	bind 			:81
+	default_backend webservers
+
+backend webservers
+	balance 		roundrobin
+{% for item in servers_list %}
+    server          {{ item.name }} {{ item.value }} check maxconn 20
+{% endfor %}

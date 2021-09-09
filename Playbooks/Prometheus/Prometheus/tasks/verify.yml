@@ -1,0 +1,13 @@
+- name: Getting Current Version
+  shell:
+    cmd: |
+      {{ installation_destination }}/prometheus/prometheus --version | awk -F'version ' '{print $2}' | awk '/[0-9]/{print}' | awk '{print $1}'
+  register: installed_version
+  ignore_errors: yes
+
+- name: Verifying...
+  debug:
+    msg: >-
+      Prometheus: {{ installed_version.stdout }} has been installed, located in: {{ installation_destination }}, 
+      config with yaml located in: {{ installation_destination }}/prometheus/, Have a nice day :)
+  when: installed_version.stdout|length != 0

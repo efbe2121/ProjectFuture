@@ -1,0 +1,15 @@
+- name: Create Docker Group
+  become: yes
+  group:
+    name: docker
+    state: present
+
+- name: Add user to Docker Group
+  become: yes
+  user:
+    name: "{{ user }}"
+    group: docker
+    append: yes
+
+- name: Reset SSH
+  meta: reset_connection

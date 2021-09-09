@@ -1,0 +1,23 @@
+- name: ReloadingDaemon
+  become: yes
+  systemd:
+    daemon_reload: yes
+
+- name: EnablingNodeExporter
+  become: yes
+  systemd:
+    state: started
+    name: node_exporter.service
+    enabled: yes
+
+- name: RestartingNodeExporter
+  become: yes
+  systemd:
+    state: restarted
+    name: node_exporter.service
+
+- name: reloadfirewall
+  become: yes
+  service:
+    state: reloaded
+    name: firewalld

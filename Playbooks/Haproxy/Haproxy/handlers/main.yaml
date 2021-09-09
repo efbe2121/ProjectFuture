@@ -1,0 +1,18 @@
+# This is handler
+- name: ReloadDaemon
+  become: yes
+  systemd:
+    daemon_reload: yes
+
+- name: EnableHaproxy
+  become: yes
+  service:
+    state: started
+    name: haproxy
+    enabled: yes
+
+- name: RestartHaproxy
+  become: yes
+  service:
+    state: restarted
+    name: haproxy

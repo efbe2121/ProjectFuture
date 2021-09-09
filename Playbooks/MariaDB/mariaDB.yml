@@ -1,0 +1,49 @@
+# Install it using ansible-galaxy collection install community.mysql
+# Installation of MariaDB itself and securing everything is done manually
+# To ensure no leaks in database
+
+- name: MariaDB Configuration
+  hosts: database
+  gather_facts: no
+  vars:
+    # Add another client when there's another 
+    # server installed or configured here
+    client1: 192.168.100.52
+    client2: 192.168.100.53
+
+  tasks:
+    - name: Allow connection from user
+      firewalld:
+        zone: public
+        rich_rule: "{{ item.rule }}"
+        permanent: true
+        state: enabled
+      loop:
+        - { rule: 'rule family="ipv4" source address="{{ client1 }}" port protocol="tcp" port="3306" accept' }
+        - { rule: 'rule family="ipv4" source address="{{ client2 }}" port protocol="tcp" port="3306" accept' }
+      become: yes
+    
+    - name: Ensure pip for python2 installed
+      package:
+        name: python-pip
+        state: present
+      become: yes
+
+    - name: Download module for mysql module
+      pip:
+        name: PyMySQL==0.10.0
+        state: present
+        extra_args: --user
+
+    - name: Grant access to each user 
+      community.mysql.mysql_user:
+        login_user: root
+        login_password: "{{ user_client_password }}"
+        name: "client"
+        host: "{{ item.ip }}"
+        password: "{{ user_client_password }}"
+        priv: 'wordpress.*:ALL'
+        state: present
+      loop:
+        - { ip: "{{ client1 }}" }
+        - { ip: "{{ client2 }}" }

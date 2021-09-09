@@ -1,0 +1,27 @@
+- name: Checking Directory...
+  file:
+    path: "{{ item.path }}"
+    state: directory
+  with_items:
+    - { path: "{{ installation_destination }}" }
+    - { path: "{{ installation_destination }}/node_exporter" }
+
+- name: Extracting file...
+  unarchive:
+    src: "{{ github_url }}/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz"
+    dest: "{{ installation_destination }}/node_exporter"
+    extra_opts: [--strip-components=1]
+    remote_src: yes
+
+- name: Opening firewall access...
+  become: yes
+  firewalld:
+    zone: public
+    rich_rule: "{{ firewall_rules }}"
+    permanent: true
+    state: enabled
+  changed_when: True
+  notify: reloadfirewall
+
+- name: Force all notified handlers to run at this point, not waiting for normal sync points
+  meta: flush_handlers

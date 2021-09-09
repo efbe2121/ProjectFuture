@@ -1,0 +1,6 @@
+- name: Installing NodeExporter
+  hosts: allserver
+  gather_facts: no
+
+  roles:
+   - role: NodeExp

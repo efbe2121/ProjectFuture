@@ -1,0 +1,11 @@
+installed_flag: False
+
+servers_list:
+  - { name: "wp_container1", value: "192.168.100.52:80" }
+  - { name: "wp_container2", value: "192.168.100.53:80" }
+  - { name: "wp_container3", value: "192.168.100.52:81" }
+  - { name: "wp_container4", value: "192.168.100.53:81" }
+  - { name: "wp_container5", value: "192.168.100.52:82" }
+  - { name: "wp_container6", value: "192.168.100.53:82" }
+
+maxkoneksi: 7500

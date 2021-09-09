@@ -1,0 +1,18 @@
+# This is handler
+- name: ReloadingDaemon
+  become: yes
+  systemd:
+    daemon_reload: yes
+
+- name: EnablingGrafana
+  become: yes
+  systemd:
+    state: started
+    name: grafana-server
+    enabled: yes
+
+- name: RestartingGrafana
+  become: yes
+  systemd:
+    state: restarted
+    name: grafana-server

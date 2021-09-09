@@ -1,0 +1,6 @@
+- name: Haproxy Installation and Configuration
+  hosts: monitoring
+  gather_facts: no
+
+  roles:
+    - role: Haproxy

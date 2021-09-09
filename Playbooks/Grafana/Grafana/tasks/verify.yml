@@ -1,0 +1,31 @@
+- name: Check if Grafana is installed.
+  shell: 
+    cmd: |
+      /sbin/grafana-server -v | awk -F'Version ' '{print $2}' | awk '/[0-9]/{print $1}'
+  register: grafana_version_local
+  ignore_errors: yes
+
+- name: Setting Flags - for update
+  set_fact:
+    update_install_flag: True
+  when: grafana_version_local.stdout|length != 0 and grafana_version_local.stdout != grafana_version
+
+- name: Setting Flags - for fresh install
+  set_fact:
+    fresh_install_flag: True
+  when: grafana_version_local.stdout|length == 0
+
+- name: Print
+  debug:
+    msg: "Installed Version: {{ grafana_version_local.stdout }}, Version Defined: {{ grafana_version }}, Proceed to installation..."
+  when: update_install_flag == True
+
+- name: Print
+  debug:
+    msg: "Not yet installed, proceed to installation..."
+  when: fresh_install_flag == True
+
+- name: Print
+  debug:
+    msg: "Installed Version: {{ grafana_version_local.stdout }}, Version Defined: {{ grafana_version }}"
+  when: fresh_install_flag == False and update_install_flag == False

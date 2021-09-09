@@ -1,0 +1,46 @@
+# Flag Variable
+# Please do not alter this flag
+update_install_flag: False
+fresh_install_flag: False
+
+# Normal Variable
+# Please alter this based on what needed
+#
+# Artifactory_url is repository url
+artifactory_url: "https://wallet-artifactory.gdn-app.com/"
+
+# Download links: 
+download_url: "https://dl.grafana.com/enterprise/release"
+
+# Paths of installation
+grafana_config_path: "/etc/grafana/grafana.ini"
+grafana_dashboard_path: "/etc/grafana/provisioning/dashboards/"
+grafana_datasources_path: "/etc/grafana/provisioning/"
+
+grafana_data_path: "/var/lib/grafana"
+grafana_logs_path: "/var/log/grafana"
+grafana_plugins_path: "/var/lib/grafana/plugins"
+
+# Information about the apps
+grafana_version: 8.1.2
+grafana_user: grafana
+
+# Configs and provisioning
+grafana_url: "http://localhost:3000"
+grafana_api_key: "{{ grafana_api_key }}"
+
+grafana_dashboard_dataset:
+  - url: "https://grafana.com/api/dashboards/1860/revisions/23/download"
+
+grafana_datasource_dataset:
+  - name: "prometheusMonitoring"
+    type: "prometheus"
+    url: "192.168.100.54:9090"
+    access: "proxy"
+
+  - name: "another prometheus"
+    type: "prometheus"
+    url: "192.168.100.54:9090"
+    access: "direct"
+
+grafana_config: {}

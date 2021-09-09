@@ -3,7 +3,7 @@ public (active)
   target: default
   icmp-block-inversion: no
   interfaces: enp0s3
-  sources: 
+  sources: 192.168.100.20
   services: dhcpv6-client ssh
   ports: 
   protocols: 
@@ -12,6 +12,6 @@ public (active)
   source-ports: 
   icmp-blocks: 
   rich rules: 
-	rule family="ipv4" source address="192.168.100.20" port port="9100" protocol="tcp" accept
-	rule family="ipv4" source address="192.168.100.52" port port="3306" protocol="tcp" accept
-	rule family="ipv4" source address="192.168.100.53" port port="3306" protocol="tcp" accept
+  rule family="ipv4" source address="192.168.100.52" port port="3306" protocol="tcp" accept
+  rule family="ipv4" source address="192.168.100.53" port port="3306" protocol="tcp" accept
+  rule family="ipv4" source address="192.168.100.54" port port="9100" protocol="tcp" accept

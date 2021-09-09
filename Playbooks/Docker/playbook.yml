@@ -1,0 +1,6 @@
+- name: Docker automation for wordpress
+  hosts: webservers
+  gather_facts: no
+
+  roles:
+    - role: Docker

@@ -1,0 +1,8 @@
+- name: Get Facts
+  package_facts:
+    manager: auto
+
+- name: Setting Flag
+  set_fact:
+    installed_flag: True
+  when: "'haproxy' in ansible_facts.packages"

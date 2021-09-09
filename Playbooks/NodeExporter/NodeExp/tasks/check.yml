@@ -1,0 +1,32 @@
+- name: Check the version
+  shell:
+    cmd: |
+      {{ installation_destination }}/node_exporter/node_exporter --version | awk -F'version ' '{print $2}' | awk '/[0-9]/{print $1}'
+  register: node_exporter_version_local
+  ignore_errors: yes
+  changed_when: node_exporter_version_local.stdout|length == 0
+
+- name: Setting Flags - for update
+  set_fact:
+    update_install_flag: True
+  when: node_exporter_version_local.stdout|length != 0 and node_exporter_version_local.stdout != node_exporter_version
+
+- name: Setting Flags - for fresh install
+  set_fact:
+    fresh_install_flag: True
+  when: node_exporter_version_local.stdout|length == 0
+
+- name: Print
+  debug:
+    msg: "Installed Version: {{ node_exporter_version_local.stdout }}, Version Defined: {{ node_exporter_version }}, Proceed to installation..."
+  when: update_install_flag == True
+
+- name: Print
+  debug:
+    msg: "Not yet installed, proceed to installation..."
+  when: fresh_install_flag == True
+
+- name: Print
+  debug:
+    msg: "Installed Version: {{ node_exporter_version_local.stdout }}, Version Defined: {{ node_exporter_version }}"
+  when: fresh_install_flag == False and update_install_flag == False

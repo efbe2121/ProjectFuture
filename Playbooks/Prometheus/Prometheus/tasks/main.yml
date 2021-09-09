@@ -1,0 +1,14 @@
+# Given the condition with when module
+# Node Exporter should be running already
+#
+# Check to do some checking if there is no
+# prometheus installed
+
+- include_tasks: check.yml
+
+- include_tasks: install.yml
+  when: fresh_install_flag == True or update_install_flag == True
+
+- include_tasks: config.yml
+
+- include_tasks: verify.yml

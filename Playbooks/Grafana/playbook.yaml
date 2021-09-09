@@ -1,0 +1,6 @@
+- name: Installing Grafana
+  hosts: monitoring
+  gather_facts: no
+
+  roles:
+    - role: Grafana

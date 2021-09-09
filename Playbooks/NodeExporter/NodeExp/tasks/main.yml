@@ -1,0 +1,14 @@
+# Installing node_exporter
+# for prometheus
+# so that it could scrap
+# any server where node exporter
+# is installed
+
+- include_tasks: check.yml
+
+- include_tasks: install.yml
+  when: fresh_install_flag == True or update_install_flag == True
+
+- include_tasks: service.yml
+
+- include_tasks: verify.yml

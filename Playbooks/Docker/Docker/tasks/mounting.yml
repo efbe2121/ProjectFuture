@@ -1,0 +1,13 @@
+- name: Ensure mounting service running
+  service:
+    name: nfs-utils
+    state: started
+  become: yes
+
+- name: Mounting wordpress
+  ansible.posix.mount:
+    src: 192.168.100.20
+    path: /home/client/WordPress/
+    state: mounted
+    fstype: nfs
+  become: yes

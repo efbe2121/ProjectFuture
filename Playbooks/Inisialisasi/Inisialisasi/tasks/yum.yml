@@ -1,0 +1,5 @@
+- name: Installing pre-requisite
+  yum:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+  loop: "{{ packages }}"

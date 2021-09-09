@@ -1,0 +1,26 @@
+- name: Copying config file & Enabled service...
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - { src: "templates/prometheus.yml.j2", dest: "{{ installation_destination }}/prometheus/prometheus.yml" }
+    - { src: "templates/prometheus.service.j2", dest: "/etc/systemd/system/prometheus.service" }
+  become: yes
+  notify: 
+    - ReloadingDaemon
+    - EnablingPrometheus
+  changed_when: True
+  when: fresh_install_flag == True
+
+- name: Rewriting file & Reloading service...
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - { src: "templates/prometheus.yml.j2", dest: "{{ installation_destination }}/prometheus/prometheus.yml" }
+    - { src: "templates/prometheus.service.j2", dest: "/etc/systemd/system/prometheus.service" }
+  become: yes
+  changed_when: True
+  notify: 
+    - ReloadingDaemon
+    - RestartingPrometheus

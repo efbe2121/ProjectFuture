@@ -1,0 +1,32 @@
+- name: Check prometheus version
+  shell:
+    cmd: |
+      {{ installation_destination }}/prometheus/prometheus --version | awk -F'version ' '{print $2}' | awk '/[0-9]/{print $1}'
+  register: prometheus_version_local
+  ignore_errors: yes
+  changed_when: prometheus_version_local.stdout|length == 0
+
+- name: Setting Flags - for update
+  set_fact:
+    update_install_flag: True
+  when: prometheus_version_local.stdout|length != 0 and prometheus_version_local.stdout != prometheus_version
+
+- name: Setting Flags - for fresh install
+  set_fact:
+    fresh_install_flag: True
+  when: prometheus_version_local.stdout|length == 0
+
+- name: Print
+  debug:
+    msg: "Installed Version: {{ prometheus_version_local.stdout }}, Version Defined: {{ prometheus_version }}, Proceed to installation..."
+  when: update_install_flag == True
+
+- name: Print
+  debug:
+    msg: "Not yet installed, proceed to installation..."
+  when: fresh_install_flag == True
+
+- name: Print
+  debug:
+    msg: "Installed Version: {{ prometheus_version_local.stdout }}, Version Defined: {{ prometheus_version }}"
+  when: fresh_install_flag == False and update_install_flag == False

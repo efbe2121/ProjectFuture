@@ -1,0 +1,28 @@
+- name: Copy Grafana Configs
+  become: yes
+  when: grafana_config is defined and grafana_config.keys()|length > 0
+  template:
+    src: "templates/grafana.ini.j2"
+    dest: "/etc/grafana/grafana.ini"
+  notify: 
+    - ReloadingDaemon
+    - RestartingGrafana
+
+- name: Making Grafana Dashboards
+  community.grafana.grafana_dashboard:
+    grafana_url: "{{ grafana_url }}"
+    grafana_api_key: "{{ grafana_api_key }}"
+    state: present
+    dashboard_url: "{{ item.url }}"
+  loop: "{{ grafana_dashboard_dataset }}"
+
+- name: Making Grafana Datasources
+  community.grafana.grafana_datasource:
+    name: "{{ item.name }}"
+    grafana_url: "{{ grafana_url }}"
+    grafana_api_key: "{{ grafana_api_key }}"
+    ds_type: "{{ item.type }}"
+    ds_url: "{{ item.url }}"
+    access: "{{ item.access }}"
+    tls_skip_verify: true
+  loop: "{{ grafana_datasource_dataset }}"

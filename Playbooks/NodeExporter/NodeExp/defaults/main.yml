@@ -1,0 +1,21 @@
+# Flag Variable
+# Please do not alter this flag
+update_install_flag: False
+fresh_install_flag: False
+
+# Normal Variable
+# Please alter this based on what needed
+#
+# Download Links
+github_url: "https://github.com/prometheus/node_exporter/releases/download"
+
+# Installation destination (obviously)
+installation_destination: "/home/{{ user }}/.installedApps"
+
+# User to run node exporter
+configured_user: "{{ user }}"
+
+# Here lies the information of the program
+node_exporter_version: 1.2.2
+
+firewall_rules: 'rule family="ipv4" source address="192.168.100.54" port protocol="tcp" port="9100" accept'

@@ -1,0 +1,6 @@
+- include_tasks: check.yml
+
+- include_tasks: install.yml
+  when: installed_flag == False
+
+- include_tasks: config.yml

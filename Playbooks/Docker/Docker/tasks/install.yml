@@ -1,0 +1,34 @@
+- name: Ensure Docker repository is added
+  become: yes
+  get_url:
+    url: https://download.docker.com/linux/centos/docker-ce.repo
+    dest: /etc/yum.repos.d/docker-ce.repo
+
+- name: Ensure Docker is installed
+  become: yes
+  yum:
+    name: 
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+    state: present
+  vars:
+    ansible_python_interpreter: /usr/bin/python
+
+# fatal: [client@192.168.100.53]: FAILED! => {"changed": false, "msg": "The Python 2 bindings for rpm are needed for this module. 
+# If you require Python 3 support use the `dnf` Ansible module instead.. The Python 2 yum module is needed for this module. If you
+# require Python 3 support use the `dnf` Ansible module instead."}
+# so thats why using python2
+
+- name: Ensure Docker module configured
+  pip:
+    name: 
+      - docker
+      # Things listed below docker may differ
+      - six
+    extra_args: --user
+    state: latest
+
+- name: Set flag
+  set_fact:
+    installed_flag: True

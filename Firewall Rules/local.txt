@@ -1,7 +1,0 @@
-~ ❯ sudo ufw status
-Status: active
-
-To                         Action      From
---                         ------      ----
-100                        ALLOW       Anywhere                  
-100 (v6)                   ALLOW       Anywhere (v6)
