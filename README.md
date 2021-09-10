@@ -1,6 +1,18 @@
 # Structure & Explanations
 ```bash
 .
+├── Apache2Configs
+│   ├── conf.d
+│   │   ├── default.conf
+│   │   ├── info.conf
+│   │   ├── languages.conf
+│   │   ├── mpm.conf
+│   │   ├── php7-module.conf
+│   │   └── userdir.conf
+│   ├── httpd.conf
+│   ├── magic
+│   ├── mime.types
+│   └── Readme.txt
 ├── Fail2Ban
 │   ├── jail.local
 │   └── updateFail2ban.yml
@@ -123,7 +135,7 @@
     ├── Dockerfile
     └── wp-config.php
 
-59 directories, 62 files
+61 directories, 72 files
 ```
 ################################################  
 run.sh is the automated script to run everything  
