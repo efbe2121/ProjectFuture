@@ -7,39 +7,123 @@
 ├── Firewall Rules
 │   ├── database.txt
 │   ├── server1.txt
-│   └── server2.txt
+│   ├── server2.txt
+│   └── server monitoring.txt
 ├── hosts.ini
-├── Monitoring
-│   ├── configureMonitoring.yml
-│   ├── docker-compose.yml
-│   ├── Grafana
-│   │   └── grafana_db
-│   │       ├── csv
-│   │       ├── grafana.db
-│   │       ├── plugins
-│   │       └── png
-│   ├── Haproxy
-│   │   ├── Dockerfile
-│   │   ├── haproxy.cfg
-│   │   ├── haproxy.cfg.j2
-│   │   └── haproxy.yml
-│   ├── NodeExporter
-│   │   ├── node_exporter
-│   │   ├── node_exporter.service
-│   │   └── nodeexporter.yml
-│   └── Prometheus
-│       ├── Dockerfile
-│       └── prometheus.yml
 ├── Playbooks
-│   ├── mariaDB.yml
-│   ├── playbook1.yml
-│   ├── playbook2.yml
-│   ├── runDocker.yml
+│   ├── Docker
+│   │   ├── Docker
+│   │   │   ├── defaults
+│   │   │   │   └── main.yaml
+│   │   │   ├── files
+│   │   │   ├── handlers
+│   │   │   │   └── main.yml
+│   │   │   ├── meta
+│   │   │   ├── tasks
+│   │   │   │   ├── install.yml
+│   │   │   │   ├── main.yml
+│   │   │   │   ├── mounting.yml
+│   │   │   │   ├── permission.yml
+│   │   │   │   └── running.yml
+│   │   │   ├── templates
+│   │   │   └── vars
+│   │   └── playbook.yml
+│   ├── Grafana
+│   │   ├── Grafana
+│   │   │   ├── defaults
+│   │   │   │   └── main.yml
+│   │   │   ├── files
+│   │   │   ├── handlers
+│   │   │   │   └── main.yml
+│   │   │   ├── meta
+│   │   │   ├── tasks
+│   │   │   │   ├── config.yml
+│   │   │   │   ├── install.yml
+│   │   │   │   ├── main.yml
+│   │   │   │   └── verify.yml
+│   │   │   ├── templates
+│   │   │   │   └── grafana.ini.j2
+│   │   │   └── vars
+│   │   └── playbook.yaml
+│   ├── Haproxy
+│   │   ├── Haproxy
+│   │   │   ├── defaults
+│   │   │   │   └── main.yml
+│   │   │   ├── files
+│   │   │   ├── handlers
+│   │   │   │   └── main.yaml
+│   │   │   ├── meta
+│   │   │   ├── tasks
+│   │   │   │   ├── check.yml
+│   │   │   │   ├── config.yml
+│   │   │   │   ├── install.yml
+│   │   │   │   └── main.yml
+│   │   │   ├── templates
+│   │   │   │   └── haproxy.cfg.j2
+│   │   │   └── vars
+│   │   └── playbook.yaml
+│   ├── Inisialisasi
+│   │   ├── Inisialisasi
+│   │   │   ├── defaults
+│   │   │   │   └── main.yml
+│   │   │   ├── files
+│   │   │   ├── handlers
+│   │   │   │   └── main.yml
+│   │   │   ├── meta
+│   │   │   ├── tasks
+│   │   │   │   ├── firewall.yml
+│   │   │   │   ├── main.yml
+│   │   │   │   └── yum.yml
+│   │   │   ├── templates
+│   │   │   └── vars
+│   │   └── playbook.yml
+│   ├── MariaDB
+│   │   └── mariaDB.yml
+│   ├── NodeExporter
+│   │   ├── NodeExp
+│   │   │   ├── defaults
+│   │   │   │   └── main.yml
+│   │   │   ├── files
+│   │   │   ├── handlers
+│   │   │   │   └── main.yml
+│   │   │   ├── meta
+│   │   │   ├── tasks
+│   │   │   │   ├── check.yml
+│   │   │   │   ├── install.yml
+│   │   │   │   ├── main.yml
+│   │   │   │   ├── service.yml
+│   │   │   │   └── verify.yml
+│   │   │   ├── templates
+│   │   │   │   └── node_exporter.service.j2
+│   │   │   └── vars
+│   │   └── playbook.yaml
+│   ├── Prometheus
+│   │   ├── playbook.yml
+│   │   └── Prometheus
+│   │       ├── defaults
+│   │       │   └── main.yaml
+│   │       ├── files
+│   │       ├── handlers
+│   │       │   └── main.yml
+│   │       ├── meta
+│   │       ├── tasks
+│   │       │   ├── check.yml
+│   │       │   ├── config.yml
+│   │       │   ├── install.yml
+│   │       │   ├── main.yml
+│   │       │   └── verify.yml
+│   │       ├── templates
+│   │       │   ├── prometheus.service.j2
+│   │       │   └── prometheus.yml.j2
+│   │       └── vars
 │   └── secrets.yml
 ├── README.md
 ├── run.sh
 └── WordPress
-    └── Dockerfile
+    ├── Dockerfile
+    └── wp-config.php
+
+59 directories, 62 files
 ```
 ################################################  
 run.sh is the automated script to run everything  
