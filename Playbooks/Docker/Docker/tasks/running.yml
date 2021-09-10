@@ -1,3 +1,9 @@
+- name: Ensure Docker Service running
+  become: yes
+  service:
+    name: docker
+    state: started
+
 - name: Making Containers
   docker_container:
     name: "{{ item.name }}"

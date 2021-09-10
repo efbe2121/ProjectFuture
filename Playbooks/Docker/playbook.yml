@@ -1,5 +1,6 @@
 - name: Docker automation for wordpress
   hosts: webservers
+  remote_user: client
   gather_facts: no
 
   roles:

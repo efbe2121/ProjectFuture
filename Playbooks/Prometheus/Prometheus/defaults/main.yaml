@@ -43,12 +43,17 @@ prometheus_scrape_configs:
     static_configs:
       - targets: ['192.168.100.54:9100']
 
+  - job_name: 'node_server3'
+    static_configs:
+      - targets: ['192.168.100.59:9100']
+
   - job_name: 'allServer'
     static_configs:
       - targets: 
         - '192.168.100.53:9100'
         - '192.168.100.52:9100'
         - '192.168.100.46:9100'
+        - '192.168.100.54:9100'
         - '192.168.100.54:9100'
 
 # Examples for prometheus alert

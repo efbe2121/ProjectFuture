@@ -1,6 +1,9 @@
 - include_tasks: permission.yml
   when: installed_flag == False
 
+- name: Reset SSH
+  meta: reset_connection
+
 - include_tasks: install.yml
   when: installed_flag == False
 
