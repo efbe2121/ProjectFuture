@@ -6,7 +6,7 @@
 
 - name: Mounting wordpress
   ansible.posix.mount:
-    src: 192.168.100.20
+    src: 192.168.100.20:/home/master/Documents/WordPress/
     path: /home/client/WordPress/
     state: mounted
     fstype: nfs

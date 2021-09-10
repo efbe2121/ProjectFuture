@@ -7,7 +7,7 @@ github_url: "https://github.com/docker/compose/releases/download"
 docker_compose_version: "1.29.2"
 docker_compose_architecture: "docker-compose-Linux-x86_64"
 
-installed_flag: True
+installed_flag: False
 ansible_python_interpreter: /usr/bin/python3
 
 docker_configs:

@@ -15,6 +15,13 @@
   vars:
     ansible_python_interpreter: /usr/bin/python
 
+- name: Enable Docker Service
+  become: yes
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
 # fatal: [client@192.168.100.53]: FAILED! => {"changed": false, "msg": "The Python 2 bindings for rpm are needed for this module. 
 # If you require Python 3 support use the `dnf` Ansible module instead.. The Python 2 yum module is needed for this module. If you
 # require Python 3 support use the `dnf` Ansible module instead."}
@@ -24,6 +31,7 @@
   pip:
     name: 
       - docker
+      - requests
       # Things listed below docker may differ
       - six
     extra_args: --user

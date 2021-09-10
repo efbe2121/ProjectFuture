@@ -8,26 +8,34 @@
   vars:
     # Add another client when there's another 
     # server installed or configured here
-    client1: 192.168.100.52
-    client2: 192.168.100.53
+    ip: []
 
   tasks:
+    - name: Getting Webservers IP Addresses
+      set_fact:
+        ip: "{{ ip + hostvars[item]['inventory_hostname'] | regex_search('client@([0-9]+.[0-9]+.[0-9]+.[0-9]+)', '\\1') }}" 
+      loop: "{{ groups['webservers'] }}"
+
     - name: Allow connection from user
       firewalld:
         zone: public
-        rich_rule: "{{ item.rule }}"
+        rich_rule: 'rule family="ipv4" source address="{{ item }}" port protocol="tcp" port="3306" accept'
         permanent: true
         state: enabled
-      loop:
-        - { rule: 'rule family="ipv4" source address="{{ client1 }}" port protocol="tcp" port="3306" accept' }
-        - { rule: 'rule family="ipv4" source address="{{ client2 }}" port protocol="tcp" port="3306" accept' }
+      loop: "{{ ip }}"
       become: yes
-    
+
+    - name: Reload Firewall
+      become: yes
+      service:
+        name: firewalld
+        state: reloaded
+
     - name: Ensure pip for python2 installed
+      become: yes
       package:
         name: python-pip
         state: present
-      become: yes
 
     - name: Download module for mysql module
       pip:
@@ -40,10 +48,8 @@
         login_user: root
         login_password: "{{ user_client_password }}"
         name: "client"
-        host: "{{ item.ip }}"
+        host: "{{ item }}"
         password: "{{ user_client_password }}"
         priv: 'wordpress.*:ALL'
         state: present
-      loop:
-        - { ip: "{{ client1 }}" }
-        - { ip: "{{ client2 }}" }
+      loop: "{{ ip }}"
