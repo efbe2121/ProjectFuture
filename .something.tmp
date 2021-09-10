@@ -1,8 +1,11 @@
 [webservers]
+client@192.168.100.56
+client@192.168.100.55
 client@192.168.100.52
 client@192.168.100.53
 
 [allserver]
+client@192.168.100.55
 client@192.168.100.46
 client@192.168.100.52
 client@192.168.100.53
