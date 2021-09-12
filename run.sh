@@ -20,7 +20,8 @@ if [ "$OPTION" == 1 ]; then
 	IPPP=$(whiptail --title "$TITLE" --inputbox "Input the client@ip" 25 78 3>&1 1>&2 2>&3)
 	sed "/\[webservers\]/a $IPPP" hosts.ini > .something.tmp \
 	&& sed "/\[allserver\]/a $IPPP" .something.tmp > host.ini \
-	&& mv host.ini hosts.ini
+	&& mv host.ini hosts.ini \
+	&& rm .something.tmp
 
 elif [ "$OPTION" == 2 ]; then
 
