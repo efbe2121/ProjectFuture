@@ -8,8 +8,10 @@
   set_fact:
     ip: "{{ ip + hostvars[item]['inventory_hostname'] | regex_search('client@([0-9]+.[0-9]+.[0-9]+.[0-9]+)', '\\1') }}" 
   loop: "{{ groups['webservers'] }}"
+  run_once: true
 
 - name: Configure exports
+  become: yes
   local_action:
     module: template
     src: exports.j2
@@ -17,7 +19,11 @@
     owner: root
     group: root
     mode: 0644
+  changed_when: true
   notify: reload_nfs
+
+- name: Run the handlers first before mounting
+  meta: flush_handlers
 
 - name: Mounting wordpress
   ansible.posix.mount:

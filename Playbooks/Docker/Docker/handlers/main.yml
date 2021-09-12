@@ -1,2 +1,5 @@
-- name: reload nfs
-  command: 'exportfs -ra'
+- name: reload_nfs
+  become: yes
+  local_action:
+    module: command
+    cmd: 'exportfs -ra'
