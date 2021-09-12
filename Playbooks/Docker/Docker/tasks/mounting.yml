@@ -4,6 +4,21 @@
     state: started
   become: yes
 
+- name: Getting Webservers IP Addresses
+  set_fact:
+    ip: "{{ ip + hostvars[item]['inventory_hostname'] | regex_search('client@([0-9]+.[0-9]+.[0-9]+.[0-9]+)', '\\1') }}" 
+  loop: "{{ groups['webservers'] }}"
+
+- name: Configure exports
+  local_action:
+    module: template
+    src: exports.j2
+    dest: /etc/exports
+    owner: root
+    group: root
+    mode: 0644
+  notify: reload_nfs
+
 - name: Mounting wordpress
   ansible.posix.mount:
     src: 192.168.100.20:/home/master/Documents/WordPress/

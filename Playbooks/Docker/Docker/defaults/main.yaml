@@ -12,3 +12,7 @@ docker_configs:
   - { name: 'WordPress1', port: 80:80 }
   - { name: 'WordPress2', port: 81:80 }
   - { name: 'WordPress3', port: 82:80 }
+
+wordpressDirectory: "/home/master/Documents/WordPress"
+nfsrules: '(rw,sync,no_subtree_check)'
+ip: []
