@@ -1,18 +1,15 @@
-[client@monitoring ~]$ sudo firewall-cmd --list-all
+[client@client ~]$ sudo firewall-cmd --list-all
 public (active)
   target: default
   icmp-block-inversion: no
   interfaces: enp0s3
-  sources: 
+  sources: 192.168.100.20 192.168.100.54
   services: dhcpv6-client ssh
-  ports: 81/tcp
+  ports: 
   protocols: 
   masquerade: no
   forward-ports: 
   source-ports: 
   icmp-blocks: 
   rich rules: 
-	rule family="ipv4" source address="192.168.100.20" accept
 	rule family="ipv4" source address="192.168.100.54" port port="9100" protocol="tcp" accept
-	rule family="ipv4" source address="192.168.100.52" accept
-	rule family="ipv4" source address="192.168.100.53" accept

@@ -54,7 +54,7 @@ prometheus_scrape_configs:
         - '192.168.100.52:9100'
         - '192.168.100.46:9100'
         - '192.168.100.54:9100'
-        - '192.168.100.54:9100'
+        - '192.168.100.59:9100'
 
 # Examples for prometheus alert
 # Source: https://github.com/cloudalchemy/ansible-prometheus/blob/master/defaults/main.yml
