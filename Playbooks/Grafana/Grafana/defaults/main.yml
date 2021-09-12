@@ -6,9 +6,6 @@ fresh_install_flag: False
 # Normal Variable
 # Please alter this based on what needed
 #
-# Artifactory_url is repository url
-artifactory_url: "https://wallet-artifactory.gdn-app.com/"
-
 # Download links: 
 download_url: "https://dl.grafana.com/enterprise/release"
 
@@ -31,6 +28,7 @@ grafana_api_key: "{{ grafana_api_key }}"
 
 grafana_dashboard_dataset:
   - url: "https://grafana.com/api/dashboards/1860/revisions/23/download"
+  - url: "https://grafana.com/api/dashboards/3662/revisions/2/download"
 
 grafana_datasource_dataset:
   - name: "prometheusMonitoring"
